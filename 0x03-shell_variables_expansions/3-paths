@@ -1,2 +1,2 @@
 #!/bin/bash
-echo $((`echo $PATH | grep -O ":/" | wc -1 + 1))
+find $PATH -mindepth 1 -type d | wc -1
