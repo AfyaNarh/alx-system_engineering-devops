@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#prints "Bestchool" ten times
+
+i=1
+while ((i <= 10))
+do
+      echo "Bestchool"
+      ((i++))
+donegit pull

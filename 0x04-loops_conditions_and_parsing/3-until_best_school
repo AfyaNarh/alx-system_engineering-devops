@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+#prints "Bestchool" ten times
+
+count=0
+until [ $count -eq 10 ]
+do
+    echo "Bestchool"
+    ((count++))
+    
+done
