@@ -1,8 +1,14 @@
-# Configure ssh client so that you can connect to a server without typing a password.
-Host *
-endEnv LANG LC_*
-    HashKnownHosts yes
-    GSSAPIAuthentication yes
-    GSSAPIDelegateCredentials no
-    IdentityFile ~/.ssh/school
-    PasswordAuthentication no
+#!/usr/bin/env bash
+# using Puppet to make changes to our configuration file
+
+file { '/etc/ssh/ssh_config':
+  ensure  => present,
+  content => "
+    #SSH client configuration
+    host
+        HostName 54.146.77.157
+        User ubuntu
+        IdentityFile ~/.ssh/school
+        PasswordAuthentication no
+   "
+}
