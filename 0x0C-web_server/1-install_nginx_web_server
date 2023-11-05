@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-# Installs nginx server
+# Update package list
 apt-get update
+
+# Install nginx
 apt-get -y install nginx
 ufw allow 'Nginx HTTP'
 echo "Hello World!" > /var/www/html/index.html
-service nginx start`:x
-
+service nginx start

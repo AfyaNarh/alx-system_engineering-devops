@@ -1,26 +1,18 @@
-#!/usr/bin/env bash
-
+ii#!/usr/bin/env bash
 # Check if correct number of parameters are provided
+
 if [ "$#" -lt 4 ]; then
     echo "Usage: $0 PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY"
     exit 1
 fi
 
-# Assign parameters to variables
-FILE_PATH=$1
-SERVER_IP=$2
-USERNAME=$3
-SSH_KEY_PATH=$4
+file_path=$1
+server_ip=$2
+username=$3
+ssh_key_path=$4
 
-# Construct theCP command
-scp_command="scp -otrictHostKeyChecking=no -i $SSH_KEY_PATH $FILE_PATH $USERNAME@$SERVER_IP:~/"
-
-# Execute theCP command
-$scp_command
-
-# Check if theCP command was successful
-if scp -otrictHostKeyChecking=no -i "$PATH_TO_FILE" "$USERNAME"@"$IP":~/; then
-    echo "File transferred successfully TO $USERNAME@$IP:~/"
+if scp -otrictHostKeyChecking=no -i "$ssh_key_path" "$file_path" "${username}@${server_ip}:~/"; then
+  echo "File successfully transferred to ${username}@${server_ip}:~/"
 else
-    echo "Error transferring file."
+  echo "File transfer failed"
 fi
