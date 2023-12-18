@@ -1,73 +1,35 @@
-stmortem
-Learning how to write an Incident Report, also referred to as a Postmortem. This postmortem follows the guidelines used closely by google engineers to file reports. The report is made up of five parts, an issue summary, a timeline, root cause analysis, resolution and recovery, and lastly, corrective and preventative measures. Lets review each of these parts in detail.
+Issue Summary:
 
-Issue Summary
-short summary (5 sentences)
-list the duration along with start and end times (include timezone)
-state the impact (most user requests resulted in 500 errors, at peak 100%)
-close with root cause
-Timeline
-list the timezone
-covers the outage duration
-when outage began
-when staff was notified
-actions, events, …
-when service was restored
-Root Cause
-give a detailed explanation of event
-do not sugarcoat
-Resolution and recovery
-give detailed explanation of actions taken (includes times)
-Corrective and Preventative Measures
-itemized list of ways to prevent it from happening again
-what can we do better next time?
-"""a recursive function that queries the Reddit API"""
+Duration: 🚀 Start Time: January 15, 2023, 02:00 PM (UTC) 🌌 End Time: January 15, 2023, 04:30 PM (UTC)
 
-import requests
+Impact: Hold onto your hats! The authentication service took a siesta, leaving 30% of users locked out and questioning their life choices. It was the login apocalypse.
 
+Root Cause: We found a rogue load balancer doing the cha-cha with our authentication server, leading to a digital meltdown. Turns out, it wasn't a DDoS dance party; it was just a one-sided love affair.
 
-def count_words(subreddit, word_list, after="", count=None):
-    """all words are counted"""
+Timeline:
 
-    if after == "":
-        count = [0] * len(word_list)
+🕵️‍♂️ Detection Time: January 15, 2023, 02:15 PM (UTC)
 
-    url = f"https://www.reddit.com/r/{subreddit}/hot.json"
-    headers = {'User-Agent': 'MyRedditBot/1.0'}
-    params = {'after': after}
-    response = requests.get(
-        url,
-        params=params,
-        headers=headers,
-        allow_redirects=False
-    )
-    if response.status_code == 200:
-        data = response.json()
+🚨 Detection Method: Our monitoring system yelled, "Houston, we have a problem!" due to an unusual spike in authentication failures.
 
-        for topic in data['data']['children']:
-            for word in topic['data']['title'].split():
-                for a in range(len(word_list)):
-                    if word_list[a].lower() == word.lower():
-                        count[a] += 1
+🛠️ Actions Taken:
 
-        after = data['data']['after']
-        if after is None:
-            save = []
-            for a in range(len(word_list)):
-                for b in range(a + 1, len(word_list)):
-                    if word_list[a].lower() == word_list[b].lower():
-                        save.append(b)
-                        count[a] += count[b]
+🔍 Investigation: Sherlock Holmes hats on, we dove into server logs, searching for clues. 🤔 Assumption: Initially suspected foul play - maybe a DDoS attack, but alas, it was a classic case of mistaken identity. 🕵️‍♂️ Misleading Paths:
 
-            for a in range(len(word_list)):
-                for b in range(a, len(word_list)):
-                    if (count[b] > count[a] or
-                            (word_list[a] > word_list[b] and
-                             count[b] == count[a])):
-                        # Original three-line swap
-                        aux = count[a]
-                        count[a] = count[b]
-                        count[b] = aux
-                        aux = word_list[a]
-                        word_list[a] = word_list[b]
+🎭 Focus on DDoS: Spent hours chasing ghosts, only to find out our ghosts were actually just a few misplaced bits and bytes. 🔝 Escalation:
 
+📡 First Level: Alert raised to the DevOps Avengers. 🕵️‍♀️ Second Level: Called in the Security Squad to check for any hackers with a penchant for bad pranks. 🌈 Resolution:
+
+🕵️‍♂️ Identified Cause: Unveiled the load balancer's secret crush on one server, causing an uneven load distribution. 🔧 Fix Implemented: Played matchmaker with load balancer settings to distribute love (traffic) more fairly. Root Cause and Resolution:
+
+🕵️‍♀️ Cause Analysis:
+
+The load balancer had a Romeo complex, favoring one server over the others, leading to a love-induced system overload. 🔧 Resolution Steps:
+
+🤖 Load Balancer Configuration: Played cupid, tweaking load balancer settings for an equal distribution of love... I mean, traffic. 📡 Monitoring Enhancement: Upgraded our monitoring system to spot any future love triangles. Corrective and Preventative Measures:
+
+🛠️ Improvements/Fixes:
+
+🤖 Automated Configuration Checks: Installed a virtual relationship counselor for the load balancer to avoid any future one-sided love affairs. 🏋️Load Testing: Started boot camp for servers to handle unexpected love loads gracefully. 📚 Enhanced Logging: Turned our logs into a rom-com script, providing more drama... I mean, information during troubleshooting. 📝 Tasks:
+
+📜 Update SOP: Spruced up our Standard Operating Procedures (SOPs) with specific steps for load balancer relationship counseling. 🎓 Training: Scheduled a rom-com movie night for the ops team to identify and respond to love-induced crises swiftly. 📢 Communication Plan: Prepared a breakup speech template for future service disruptions, making it less of a tearjerker for our users. In the end, our systems are back on track, and the load balancer has promised to attend relationship counseling regularly. Remember, even in the digital world, love triangles are best avoided! 🚀💔 
